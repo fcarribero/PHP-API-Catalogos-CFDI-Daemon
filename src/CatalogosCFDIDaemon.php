@@ -55,6 +55,6 @@ class CatalogosCFDIDaemon {
 
         socket_close($socket);
 
-        return json_decode($response, true);
+        return json_decode($response);
     }
 }
