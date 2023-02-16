@@ -42,7 +42,9 @@ class CatalogosCFDIDaemon {
     protected function call($catalogo, $value = null, $where = null, $fecha = null) {
         $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 
-        socket_connect($socket, $this->config->ip, $this->config->port);
+        if (!socket_connect($socket, $this->config->ip, $this->config->port)) {
+            throw new Exception('No se pudo conectar con API-Catalogos-CFDI');
+        }
 
         socket_write($socket, json_encode([
             'catalogo' => $catalogo,
