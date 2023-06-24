@@ -38,6 +38,9 @@ class CatalogosCFDIDaemon {
             } else {
                 throw new Exception('Tipo de objeto no soportado. Se esperaba ' . CustomWhere::class . ' y se recibió ' . get_class($value));
             }
+        } else if (gettype($value) == 'array') {
+            $where = new CustomWhere($value[0], $value[1]);
+            return $this->call($catalogo, null, $where->parse(), $fecha);
         } else {
             return $this->call($catalogo, $value, null, $fecha);
         }
