@@ -32,8 +32,12 @@ class CatalogosCFDIDaemon {
      * @throws CatalogosCFDIException
      */
     public function getItem($catalogo, $value, $fecha = null) {
-        if (gettype($value) == 'object' && get_class($value) == CustomWhere::class) {
-            return $this->call($catalogo, null, $value->parse(), $fecha);
+        if (gettype($value) == 'object') {
+            if (get_class($value) == CustomWhere::class) {
+                return $this->call($catalogo, null, $value->parse(), $fecha);
+            } else {
+                throw new Exception('Tipo de objeto no soportado. Se esperaba ' . CustomWhere::class . ' y se recibió ' . get_class($value));
+            }
         } else {
             return $this->call($catalogo, $value, null, $fecha);
         }
